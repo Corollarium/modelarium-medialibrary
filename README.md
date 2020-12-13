@@ -4,6 +4,14 @@
 
 This package integrates [Spatie's Laravel Media Library](https://github.com/spatie/laravel-medialibrary) to [Modelarium](https://github.com/Corollarium/modelarium).
 
+## Installing
+
+On your Laravel app run:
+
+```
+composer require modelarium-medialibrary
+```
+
 ## Quick overview
 
 This a Graphql file for a model with two different media collections, "image" and "map". Both have extra fields, "url" and "description". "Map" also has a conversion "thumb" with 150x150 (max, maintaining aspect ratio) thumbnails.

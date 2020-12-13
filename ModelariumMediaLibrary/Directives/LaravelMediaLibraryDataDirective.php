@@ -39,6 +39,7 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
         $conversion = '';
         $width = 200;
         $height = 200;
+        $singleFile = false;
         $responsive = false;
 
         // args
@@ -57,6 +58,10 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
                     foreach ($arg->value->values as $item) {
                         $customFields[] = $item->value;
                     }
+                break;
+                case 'singleFile':
+                    /** @phpstan-ignore-next-line */
+                    $conversion = $arg->value->value;
                 break;
                 case 'conversion':
                     /** @phpstan-ignore-next-line */
@@ -105,6 +110,7 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
             }
             $registerMediaConversions->addBody(
                 "\$this->addMediaConversions(?)" .
+                    ($singleFile ? '->singleFile()' : '') .
                     ($width ? '->width(?)' : '') .
                     ($height ? '->height(?)' : '') .
                     ($responsive ? '->withResponsiveImages()' : '') .

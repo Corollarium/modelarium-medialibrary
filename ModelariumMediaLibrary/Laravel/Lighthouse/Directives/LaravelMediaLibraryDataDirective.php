@@ -25,6 +25,11 @@ directive @laravelMediaLibraryData (
     fields: [String!]
 
     """
+    Declare it as as single file collection.
+    """
+    singleFile: Boolean
+
+    """
     The media conversion name to make, if there's one
     """
     conversion: String
