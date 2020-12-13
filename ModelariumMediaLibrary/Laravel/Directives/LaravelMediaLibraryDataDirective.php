@@ -37,8 +37,8 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
         }
 
         $conversion = '';
-        $width = 200;
-        $height = 200;
+        $width = 0;
+        $height = 0;
         $singleFile = false;
         $responsive = false;
 
@@ -59,13 +59,13 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
                         $customFields[] = $item->value;
                     }
                 break;
-                case 'singleFile':
-                    /** @phpstan-ignore-next-line */
-                    $conversion = $arg->value->value;
-                break;
                 case 'conversion':
                     /** @phpstan-ignore-next-line */
                     $conversion = $arg->value->value;
+                break;
+                case 'singleFile':
+                    /** @phpstan-ignore-next-line */
+                    $singleFile = $arg->value->value;
                 break;
                 case 'width':
                     /** @phpstan-ignore-next-line */
@@ -92,7 +92,14 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
         } else {
             $registerMediaCollections = $generator->class->getMethod("registerMediaCollections");
         }
-        $registerMediaCollections->addBody("\$this->addMediaCollection(?);\n", [$collection]);
+
+        // singlefile
+        $registerMediaCollections->addBody(
+            '$this->addMediaCollection(?)' .
+            ($singleFile ? '->singleFile()' : '') .
+            ";\n", 
+            [$collection]
+        );
 
         // conversion
         if ($conversion) {
@@ -110,13 +117,18 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
             }
             $registerMediaConversions->addBody(
                 "\$this->addMediaConversions(?)" .
-                    ($singleFile ? '->singleFile()' : '') .
                     ($width ? '->width(?)' : '') .
                     ($height ? '->height(?)' : '') .
                     ($responsive ? '->withResponsiveImages()' : '') .
                 ";\n",
                 array_merge([$conversion], ($width ? [$width] : []), ($height ? [$height] : []))
             );
+        }
+        else {
+            if ($width || $height || $responsive) {
+                throw new \Exception("Conversion parameters present on laravelMediaLibraryData for field {$field->name}, but `conversion` field not set.");
+            }
+
         }
 
         // all image models for this collection
