@@ -9,7 +9,7 @@ This package integrates [Spatie's Laravel Media Library](https://github.com/spat
 On your Laravel app run:
 
 ```
-composer require modelarium-medialibrary
+composer require corollarium/modelarium-medialibrary
 ```
 
 ## Quick overview

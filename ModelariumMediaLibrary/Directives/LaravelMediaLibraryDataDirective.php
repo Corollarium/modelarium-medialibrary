@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Modelarium\Laravel\Directives;
+namespace ModelariumMediaLibrary\Laravel\Directives;
 
 use Illuminate\Support\Str;
 use Modelarium\Laravel\Targets\ModelGenerator;
