@@ -50,7 +50,7 @@ directive @laravelMediaLibrary (
     """
     Declare conversions
     """
-    conversion: [LaravelMediaLibraryConversion!]
+    conversions: [LaravelMediaLibraryConversion!]
 ) on FIELD_DEFINITION
 
 

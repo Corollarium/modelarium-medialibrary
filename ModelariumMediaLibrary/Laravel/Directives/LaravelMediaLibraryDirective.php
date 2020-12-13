@@ -114,7 +114,7 @@ class LaravelMediaLibraryDirective implements ModelDirectiveInterface
                         $customFields[] = $item->value;
                     }
                 break;
-                case 'conversion':
+                case 'conversions':
                     /** @phpstan-ignore-next-line */
                     foreach ($arg->value->values as $item) {
                         self::_processConversion($generator, $item);
@@ -183,14 +183,14 @@ class LaravelMediaLibraryDirective implements ModelDirectiveInterface
                     <<< PHP
     \$image = \$this->getMedia{$studlyCollection}Collection()->first();
 if (\$image) {
-\$customFields = [];
-foreach (\$this->getMedia{$studlyCollection}CustomFields() as \$c) {
-    \$customFields[\$c] = \$image->getCustomProperty(\$c);
-}
-return [
-    'url' => \$image->getUrl(),
-    'fields' => json_encode(\$customFields)
-];
+    \$customFields = [];
+    foreach (\$this->getMedia{$studlyCollection}CustomFields() as \$c) {
+        \$customFields[\$c] = \$image->getCustomProperty(\$c);
+    }
+    return [
+        'url' => \$image->getUrl(),
+        'fields' => json_encode(\$customFields)
+    ];
 }
 return [];
 PHP
