@@ -1,3 +1,15 @@
+<?php declare(strict_types=1);
+
+namespace ModelariumMediaLibrary\Laravel\Lighthouse\Directives;
+
+use Nuwave\Lighthouse\Schema\Directives\BaseDirective;
+use Nuwave\Lighthouse\Support\Contracts\DefinedDirective;
+
+class LaravelMediaLibraryDataDirective extends BaseDirective implements DefinedDirective
+{
+    public static function definition(): string
+    {
+        return /** @lang GraphQL */ <<<'SDL'
 """
 The conversion type
 """
@@ -53,11 +65,7 @@ directive @laravelMediaLibrary (
     conversion: [LaravelMediaLibraryConversion!]
 ) on FIELD_DEFINITION
 
-
-"""
-The media data type
-"""
-type LaravelMediaLibraryData @typeSkip {
-    url: Url
-    fields: Json
+        
+SDL;
+    }
 }

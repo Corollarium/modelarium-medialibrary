@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Modelarium\Laravel\Targets\ModelGenerator;
 use Modelarium\Laravel\Targets\Interfaces\ModelDirectiveInterface;
 
-class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
+class LaravelMediaLibraryDirective implements ModelDirectiveInterface
 {
     public static function processModelTypeDirective(
         ModelGenerator $generator,
@@ -19,6 +19,65 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
         \GraphQL\Type\Definition\FieldDefinition $field,
         \GraphQL\Language\AST\DirectiveNode $directive
     ): void {
+    }
+
+    /**
+     * Processes type LaravelMediaLibraryConversion
+     *
+     * @param ModelGenerator $generator
+     * @param \GraphQL\Language\AST\ObjectValueNode $node
+     * @return void
+     */
+    protected static function _processConversion(
+        ModelGenerator $generator,
+        \GraphQL\Language\AST\ObjectValueNode $node
+    ): void {
+        $name = '';
+        $width = 0;
+        $height = 0;
+        $responsive = false;
+
+        foreach ($node->fields as $arg) {
+            switch ($arg->name->value) {
+            case 'name':
+                /** @phpstan-ignore-next-line */
+                $name = $arg->value->value;
+            break;
+            case 'width':
+                /** @phpstan-ignore-next-line */
+                $width = $arg->value->value;
+            break;
+            case 'height':
+                /** @phpstan-ignore-next-line */
+                $height = $arg->value->value;
+            break;
+            case 'responsive':
+                /** @phpstan-ignore-next-line */
+                $responsive = $arg->value->value;
+            break;
+            }
+        }
+
+        if (!$generator->class->hasMethod("registerMediaConversions")) {
+            $registerMediaConversions = $generator->class->addMethod("registerMediaConversions")
+                ->setPublic()
+                ->setReturnType('void')
+                ->addComment("Configures Laravel media-library conversions");
+            $registerMediaConversions->addParameter('media')
+                ->setDefaultValue(null)
+                ->setType('\\Spatie\\MediaLibrary\\MediaCollections\\Models\\Media')
+                ->setNullable(true);
+        } else {
+            $registerMediaConversions = $generator->class->getMethod("registerMediaConversions");
+        }
+        $registerMediaConversions->addBody(
+            "\$this->addMediaConversions(?)" .
+                ($width ? '->width(?)' : '') .
+                ($height ? '->height(?)' : '') .
+                ($responsive ? '->withResponsiveImages()' : '') .
+            ";\n",
+            array_merge([$name], ($width ? [$width] : []), ($height ? [$height] : []))
+        );
     }
 
     public static function processModelRelationshipDirective(
@@ -36,11 +95,7 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
             $generator->class->addTrait('\\Spatie\\MediaLibrary\\InteractsWithMedia');
         }
 
-        $conversion = '';
-        $width = 0;
-        $height = 0;
         $singleFile = false;
-        $responsive = false;
 
         // args
         foreach ($directive->arguments as $arg) {
@@ -61,23 +116,13 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
                 break;
                 case 'conversion':
                     /** @phpstan-ignore-next-line */
-                    $conversion = $arg->value->value;
+                    foreach ($arg->value->values as $item) {
+                        self::_processConversion($generator, $item);
+                    }
                 break;
                 case 'singleFile':
                     /** @phpstan-ignore-next-line */
                     $singleFile = $arg->value->value;
-                break;
-                case 'width':
-                    /** @phpstan-ignore-next-line */
-                    $width = $arg->value->value;
-                break;
-                case 'height':
-                    /** @phpstan-ignore-next-line */
-                    $height = $arg->value->value;
-                break;
-                case 'responsive':
-                    /** @phpstan-ignore-next-line */
-                    $responsive = $arg->value->value;
                 break;
             }
         }
@@ -100,36 +145,6 @@ class LaravelMediaLibraryDataDirective implements ModelDirectiveInterface
             ";\n", 
             [$collection]
         );
-
-        // conversion
-        if ($conversion) {
-            if (!$generator->class->hasMethod("registerMediaConversions")) {
-                $registerMediaConversions = $generator->class->addMethod("registerMediaConversions")
-                    ->setPublic()
-                    ->setReturnType('void')
-                    ->addComment("Configures Laravel media-library conversions");
-                $registerMediaConversions->addParameter('media')
-                    ->setDefaultValue(null)
-                    ->setType('\\Spatie\\MediaLibrary\\MediaCollections\\Models\\Media')
-                    ->setNullable(true);
-            } else {
-                $registerMediaConversions = $generator->class->getMethod("registerMediaConversions");
-            }
-            $registerMediaConversions->addBody(
-                "\$this->addMediaConversions(?)" .
-                    ($width ? '->width(?)' : '') .
-                    ($height ? '->height(?)' : '') .
-                    ($responsive ? '->withResponsiveImages()' : '') .
-                ";\n",
-                array_merge([$conversion], ($width ? [$width] : []), ($height ? [$height] : []))
-            );
-        }
-        else {
-            if ($width || $height || $responsive) {
-                throw new \Exception("Conversion parameters present on laravelMediaLibraryData for field {$field->name}, but `conversion` field not set.");
-            }
-
-        }
 
         // all image models for this collection
         $generator->class->addMethod("getMedia{$studlyCollection}Collection")
