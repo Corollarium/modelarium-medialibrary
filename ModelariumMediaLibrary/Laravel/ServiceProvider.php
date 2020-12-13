@@ -25,13 +25,7 @@ class ServiceProvider extends LaravelServiceProvider
         Event::listen(
             RegisterDirectiveNamespaces::class,
             function (RegisterDirectiveNamespaces $registerDirectiveNamespaces): string {
-                return 'Modelarium\\Laravel\\Lighthouse\\Directives';
-            }
-        );
-        Event::listen(
-            RegisterDirectiveNamespaces::class,
-            function (RegisterDirectiveNamespaces $registerDirectiveNamespaces): string {
-                return 'App\\Datatypes\\Types';
+                return 'ModelariumMediaLibrary\\Laravel\\Lighthouse\\Directives';
             }
         );
     }
