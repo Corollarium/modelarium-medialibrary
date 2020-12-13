@@ -225,7 +225,7 @@ type Post {
         @migrationSkip
         @laravelMediaLibraryData(
             collection: "image"
-            single: true
+            singleFile: true
             fields: ["url", "description"]
         )
 }
