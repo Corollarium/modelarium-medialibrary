@@ -5,7 +5,7 @@ namespace ModelariumMediaLibrary\Laravel\Lighthouse\Directives;
 use Nuwave\Lighthouse\Schema\Directives\BaseDirective;
 use Nuwave\Lighthouse\Support\Contracts\DefinedDirective;
 
-class LaravelMediaLibraryDataDirective extends BaseDirective implements DefinedDirective
+class LaravelMediaLibraryDirective extends BaseDirective implements DefinedDirective
 {
     public static function definition(): string
     {
