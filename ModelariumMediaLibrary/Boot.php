@@ -4,6 +4,7 @@ namespace ModelariumMediaLibrary;
 
 use Modelarium\Modelarium;
 
-Modelarium::registerGeneratorDirectiveNamespace(
-    'ModelariumMediaLibrary\\Directives'
+Modelarium::registerDirectiveLaravelLibrary(
+    'ModelariumMediaLibrary'
 );
+

@@ -20,8 +20,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Modelarium\\": "ModelariumMediaLibrary/",
-            "ModelariumTests\\": "tests/Unit"
+            "ModelariumMediaLibrary\\": "ModelariumMediaLibrary/",
+            "ModelariumMediaLibraryTests\\": "tests/Unit"
         },
         "files": [
             "ModelariumMediaLibrary/Boot.php"
@@ -40,7 +40,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "ModelariumMediaLibrary\\ServiceProvider"
+                "ModelariumMediaLibrary\\Laravel\\ServiceProvider"
             ]
         }
     }

@@ -16,9 +16,11 @@ class ServiceProvider extends LaravelServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/graphql/schema.graphql' => base_path('graphql/modelariumMediaLibrary.graphql'),
+            __DIR__ . '/graphql/modelariumMediaLibrary.graphql' => base_path('graphql/modelariumMediaLibrary.graphql'),
         ], 'schema');
-
+        
+        $this->publishes([
+        ], 'schemabase');
         
         Event::listen(
             RegisterDirectiveNamespaces::class,
