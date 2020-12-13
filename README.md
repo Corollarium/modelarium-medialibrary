@@ -41,18 +41,18 @@ type Post
   image: LaravelMediaLibraryData
       @migrationSkip
       @laravelMediaLibraryData(
-          collection: "image"
-          fields: ["url", "description"]
+            collection: "image"
+            fields: ["url", "description"]
       )
 
   map: LaravelMediaLibraryData
       @migrationSkip
       @laravelMediaLibraryData(
-          collection: "map"
-          fields: ["url", "description"]
-          conversion: "thumb"
-          width: 150
-          height: 150
+            collection: "map"
+            fields: ["url", "description"]
+            conversions: [
+                { name: "thumb", width: 150, height: 150 }
+            ]
       )
 }
 
