@@ -1,0 +1,4 @@
+type LaravelMediaLibraryData @typeSkip {
+    url: Url
+    fields: Json
+}

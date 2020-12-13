@@ -1,0 +1,46 @@
+{
+    "name": "corollarium/modelarium-medialibrary",
+    "description": "Integrates Spatie Laravel-media-library with Modelarium and GraphQL",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "media",
+        "modelarium",
+        "graphql",
+        "laravel",
+        "web"
+    ],
+    "require": {
+        "php": ">=7.2.0",
+        "webonyx/graphql-php": "^0.13.9",
+        "illuminate/support": "^7.16",
+        "corollarium/modelarium": "dev-master",
+        "nuwave/lighthouse": "^4.15"
+    },
+    "autoload": {
+        "psr-4": {
+            "Modelarium\\": "ModelariumMediaLibrary/",
+            "ModelariumTests\\": "tests/Unit"
+        },
+        "files": [
+            "ModelariumMediaLibrary/Boot.php"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7",
+        "phpstan/phpstan": "^0.12",
+        "thecodingmachine/phpstan-safe-rule": "^1.0"
+    },
+    "scripts": {
+        "stan": "php -d memory_limit=-1 vendor/bin/phpstan analyse Modelarium",
+        "coverage": "./vendor/bin/phpunit --configuration phpunit.xml --coverage-html docs/coverage-report tests/",
+        "test": "./vendor/bin/phpunit --configuration phpunit.xml tests/"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ModelariumMediaLibrary\\ServiceProvider"
+            ]
+        }
+    }
+}
