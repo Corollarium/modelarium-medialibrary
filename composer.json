@@ -3,6 +3,7 @@
     "description": "Integrates Spatie Laravel-media-library with Modelarium and GraphQL",
     "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/Corollarium/modelarium-medialibrary/",
     "keywords": [
         "media",
         "modelarium",
