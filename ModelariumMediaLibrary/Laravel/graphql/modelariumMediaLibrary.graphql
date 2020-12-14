@@ -1,7 +1,7 @@
 """
 The conversion type
 """
-type LaravelMediaLibraryConversion {
+type LaravelMediaLibraryConversion @typeSkip {
     """
     The media conversion name.
     """

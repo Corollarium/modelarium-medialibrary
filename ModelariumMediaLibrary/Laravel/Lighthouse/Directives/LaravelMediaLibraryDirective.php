@@ -9,63 +9,6 @@ class LaravelMediaLibraryDirective extends BaseDirective implements DefinedDirec
 {
     public static function definition(): string
     {
-        return /** @lang GraphQL */ <<<'SDL'
-"""
-The conversion type
-"""
-type LaravelMediaLibraryConversion {
-    """
-    The media conversion name.
-    """
-    name: String!
-
-    """
-    Apply this width.
-    """
-    width: Int
-
-    """
-    Apply this height.
-    """
-    height: Int
-
-    """
-    Sharpen image.
-    """
-    sharpen: Int
-    
-    """
-    If true, runs withResponsiveImages().
-    """
-    responsive: Boolean
-}
-
-"""
-Implement the Laravel Media Library attributes on a model
-"""
-directive @laravelMediaLibrary (
-    """
-    The collection name to use
-    """
-    collection: String
-
-    """
-    The list of fields to compose in the index
-    """
-    fields: [String!]
-
-    """
-    Declare it as as single file collection.
-    """
-    singleFile: Boolean
-
-    """
-    Declare conversions
-    """
-    conversion: [LaravelMediaLibraryConversion!]
-) on FIELD_DEFINITION
-
-        
-SDL;
+        return file_get_contents('../../graphql/modelariumMediaLibrary.graphql');
     }
 }
