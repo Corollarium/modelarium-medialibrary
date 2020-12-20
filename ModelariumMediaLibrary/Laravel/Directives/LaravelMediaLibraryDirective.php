@@ -84,8 +84,9 @@ class LaravelMediaLibraryDirective implements ModelDirectiveInterface
     public static function processModelRelationshipDirective(
         ModelGenerator $generator,
         \GraphQL\Type\Definition\FieldDefinition $field,
-        \GraphQL\Language\AST\DirectiveNode $directive
-    ): string {
+        \GraphQL\Language\AST\DirectiveNode $directive,
+        \Formularium\Datatype $datatype = null
+    ): ?\Formularium\Datatype {
         $collection = 'images';
         $customFields = [];
         $studlyFieldName = Str::studly($field->name);
@@ -198,6 +199,6 @@ PHP
                 );
 
         // TODO: get converted images, thumb https://spatie.be/docs/laravel-medialibrary/v8/converting-images/retrieving-converted-images
-        return '';
+        return null;
     }
 }
