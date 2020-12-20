@@ -251,7 +251,7 @@ Just define the `LaravelMediaLibraryData` field in your type. Example:
 
 ```graphql
 type Post { 
-    image: LaravelMediaLibraryData
+    image: [LaravelMediaLibraryData!]
         @migrationSkip
         @laravelMediaLibraryData(
             collection: "image"
@@ -277,17 +277,133 @@ query($id: ID!) {
 }
 ```
 
-### How do I get the thumbnail image data in a query?
+You can easily access only the first one too:
 
-TODO
+
+```graphql
+type Post { 
+    image: [LaravelMediaLibraryData!]
+        @migrationSkip
+        @laravelMediaLibraryData(
+            collection: "image"
+            fields: ["url", "description"]
+        )
+    
+    # add this to get the first one:
+    imageFirst: LaravelMediaLibraryData @migrationSkip
+}
+```
+
+In your query:
+
+```graphql
+query($id: ID!) {
+    post(id: $id) {
+        id
+
+        # ... other fields
+
+        imageFirst {
+            url # the url, a String
+            fields # a JSON-encoded string with your custom fields if they exist
+        }
+    }
+}
+```
+
+## I want a single image in the collection, never more than one. How do I do that?
+
+Declare a `singleFile` collection. Notice that the return type here is a single `LaravelMediaLibraryData`, not an array:
+
+```graphql
+type Post { 
+    image: LaravelMediaLibraryData
+        @migrationSkip
+        @laravelMediaLibraryData(
+            collection: "image"
+            singleFile: true
+            fields: ["url", "description"]
+        )
+
+    # the [collection]First attribute is also available, so you can mix it with non-singleFile collections:
+    imageFirst: LaravelMediaLibraryData @migrationSkip
+
+}
+```
+
+Then access it normally:
+
+```graphql
+query($id: ID!) {
+    post(id: $id) {
+        id
+
+        # ... other fields
+
+        image {
+            url # the url, a String
+            fields # a JSON-encoded string with your custom fields if they exist
+        }
+    }
+}
+```
+
+### How do I add thumbnails?
+
+Add a `conversions` field. Two accessor methods will be created on your model for each collection: `[CollectionName][ConversionName]HTML` (which generates the full HTML tag) and `[CollectionName][ConversionName]Url` (just the URL). Add them to your GraphQL type (and remember to `@migrationSkip` them) to access them. Example:
+
+```graphql
+type Post { 
+    image: LaravelMediaLibraryData
+        @migrationSkip
+        @eagerLoad(name: "media")
+        @laravelMediaLibraryData(
+            collection: "image"
+            conversions: [{ name: "thumb", width: 128, height: 128 }]
+        )
+
+    imageThumbHTML: String @migrationSkip @renderable(show: true)
+
+    imageThumbUrl: Url @migrationSkip @renderable(show: true)
+
+}
+```
+
+Easy to fetch:
+
+```graphql
+query($id: ID!) {
+    post(id: $id) {
+        id
+
+        # ... other fields
+
+        imageThumbUrl
+    }
+}
+```
 
 ### How do I get the responsive image data in a query?
 
-TODO
+Add a `conversions` field with `responsive: true`.
+
+```graphql
+type Post { 
+    image: LaravelMediaLibraryData
+        @migrationSkip
+        @eagerLoad(name: "media")
+        @laravelMediaLibraryData(
+            collection: "image"
+            conversions: [{ name: "thumb",  responsive: true}]
+        )
+}
+```
+
+TODO: explain how to get data
 
 ### How do I eager load?
 
-Add an `@eagerLoad` directive:
+Add an `@eagerLoad` directive to eager load the table and avoid a N+1 problem. 
 
 ```graphql
 type Post { 
@@ -304,6 +420,8 @@ type Post {
 ## Sponsors
 
 [![Corollarium](https://corollarium.github.com/modelarium/logo-horizontal-400px.png)](https://corollarium.com)
+
+We want to thanks to [Spatie](https://github.com/spatie) for its wonderful [Spatie's Laravel Media Library](https://github.com/spatie/laravel-medialibrary).
 
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Corollarium/modelarium-medialibrary/issues)
 
