@@ -285,6 +285,22 @@ TODO
 
 TODO
 
+### How do I eager load?
+
+Add an `@eagerLoad` directive:
+
+```graphql
+type Post { 
+    image: LaravelMediaLibraryData
+        @migrationSkip
+        @eagerLoad(name: "media")
+        @laravelMediaLibraryData(
+            collection: "image"
+            fields: ["url", "description"]
+        )
+}
+```
+
 ## Sponsors
 
 [![Corollarium](https://corollarium.github.com/modelarium/logo-horizontal-400px.png)](https://corollarium.com)
