@@ -189,7 +189,7 @@ class LaravelMediaLibraryDirective implements ModelDirectiveInterface
                 ->addComment("Returns custom fields for the media")
                 ->setBody("return ?;", [$customFields]);
 
-        $generator->class->addMethod("get{$studlyFieldName}urlAttribute")
+        $generator->class->addMethod("get{$studlyFieldName}UrlAttribute")
                 ->setPublic()
                 ->setReturnType('string')
                 ->addComment("Returns the media attribute (url) for the $collection")

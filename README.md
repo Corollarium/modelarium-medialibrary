@@ -36,7 +36,7 @@ type Post
       @modelFillable
       @renderable(label: "Description", itemtype: "description")
 
-  imageurl: Url @migrationSkip
+  imageUrl: Url @migrationSkip
 
   image: LaravelMediaLibraryData
       @migrationSkip
@@ -101,7 +101,7 @@ abstract class BasePost extends \Illuminate\Database\Eloquent\Model implements \
     /**
      * Returns the media attribute (url) for the image
      */
-    public function getImageurlAttribute(): string
+    public function getImageUrlAttribute(): string
     {
         $image = $this->getMediaImageCollection()->first();
         if ($image) {
@@ -156,7 +156,7 @@ abstract class BasePost extends \Illuminate\Database\Eloquent\Model implements \
     /**
      * Returns the media attribute (url) for the map
      */
-    public function getMapurlAttribute(): string
+    public function getMapUrlAttribute(): string
     {
         $image = $this->getMediaMapCollection()->first();
         if ($image) {
@@ -212,14 +212,14 @@ class Post extends BasePost
 
 ### How do I get only the image url for a single image in my type?
 
-Define a `xxxurl` on your type, where `xxx` is your collection name. which is filled automatically by the attribute method on the model. Don't forget to add `@migrationSkip` so it won't be created in the migration. Example:
+Define a `xxxUrl` on your type, where `xxx` is your collection name. which is filled automatically by the attribute method on the model. Don't forget to add `@migrationSkip` so it won't be created in the migration. Example:
 
 ```graphql
 type Post { 
     # ...
 
     # this field is filled automatically by the model
-    imageurl: Url @migrationSkip
+    imageUrl: Url @migrationSkip
 
     image: LaravelMediaLibraryData
         @migrationSkip
@@ -240,7 +240,7 @@ query($id: ID!) {
 
         # ... other fields
 
-        imageurl # this will return the image url
+        imageUrl # this will return the image url
     }
 }
 ```
