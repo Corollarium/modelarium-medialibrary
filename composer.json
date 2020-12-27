@@ -15,7 +15,7 @@
         "php": ">=7.2.0",
         "webonyx/graphql-php": "^0.13.9",
         "illuminate/support": "^7.16",
-        "corollarium/modelarium": "dev-master",
+        "corollarium/modelarium": "^0.2.0",
         "nuwave/lighthouse": "^4.15"
     },
     "autoload": {
@@ -33,7 +33,7 @@
         "thecodingmachine/phpstan-safe-rule": "^1.0"
     },
     "scripts": {
-        "stan": "php -d memory_limit=-1 vendor/bin/phpstan analyse Modelarium",
+        "stan": "php -d memory_limit=-1 vendor/bin/phpstan analyse ModelariumMediaLibrary",
         "coverage": "./vendor/bin/phpunit --configuration phpunit.xml --coverage-html docs/coverage-report tests/",
         "test": "./vendor/bin/phpunit --configuration phpunit.xml tests/"
     },
