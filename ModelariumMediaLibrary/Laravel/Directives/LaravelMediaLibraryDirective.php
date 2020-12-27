@@ -47,11 +47,11 @@ class LaravelMediaLibraryDirective implements ModelDirectiveInterface
             break;
             case 'width':
                 /** @phpstan-ignore-next-line */
-                $width = $arg->value->value;
+                $width = (int)$arg->value->value;
             break;
             case 'height':
                 /** @phpstan-ignore-next-line */
-                $height = $arg->value->value;
+                $height = (int)$arg->value->value;
             break;
             case 'responsive':
                 /** @phpstan-ignore-next-line */
@@ -178,7 +178,7 @@ class LaravelMediaLibraryDirective implements ModelDirectiveInterface
         // all image models for this collection
         $generator->class->addMethod("getMedia{$studlyCollection}Collection")
                 ->setPublic()
-                ->setReturnType('\\Spatie\\MediaLibrary\\MediaCollections\\Models\\Collections\\MediaCollection')
+                ->setReturnType('\\Illuminate\\Support\\Collection')
                 ->addComment("Returns a collection media from Laravel-MediaLibrary")
                 ->setBody("return \$this->getMedia(?);", [$collection]);
 
