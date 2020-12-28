@@ -1,5 +1,9 @@
 <h1 align="center">Modelarium - Laravel Media Library package</h1>
 
+[![Latest Stable Version](https://img.shields.io/packagist/v/corollarium/modelarium-medialibrary.svg?style=flat-square)](https://packagist.org/packages/corollarium/modelarium-medialibrary)
+[![Total Downloads](https://img.shields.io/packagist/dt/corollarium/modelarium-medialibrary.svg?style=flat-square)](https://packagist.org/packages/corollarium/modelarium-medialibrary)
+[![License](https://img.shields.io/packagist/l/corollarium/modelarium-medialibrary.svg?style=flat-square)](https://packagist.org/packages/corollarium/modelarium-medialibrary)
+
 ---
 
 This package integrates [Spatie's Laravel Media Library](https://github.com/spatie/laravel-medialibrary) to [Modelarium](https://github.com/Corollarium/modelarium).
