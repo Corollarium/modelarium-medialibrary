@@ -6,7 +6,7 @@
 
 ---
 
-This package integrates [Spatie's Laravel Media Library](https://github.com/spatie/laravel-medialibrary) to [Modelarium](https://github.com/Corollarium/modelarium).
+This package integrates [Spatie's Laravel Media Library](https://github.com/spatie/laravel-medialibrary) to [Modelarium](https://github.com/Corollarium/modelarium), allowing GraphQL queries with [LighthousePHP](https://github.com/nuwave/lighthouse) to easily access media on models.
 
 ## Installing
 

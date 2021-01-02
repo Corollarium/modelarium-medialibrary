@@ -17,7 +17,7 @@
         "php": ">=7.2.0",
         "webonyx/graphql-php": "^0.13.9",
         "illuminate/support": "^7.16",
-        "corollarium/modelarium": "~0.2.0-dev",
+        "corollarium/modelarium": "^0.3",
         "nuwave/lighthouse": "^4.15"
     },
     "suggest": {
@@ -33,7 +33,7 @@
         ]
     },
     "require-dev": {
-        "phpunit/phpunit": "^7",
+        "phpunit/phpunit": "^8",
         "phpstan/phpstan": "^0.12",
         "thecodingmachine/phpstan-safe-rule": "^1.0"
     },
