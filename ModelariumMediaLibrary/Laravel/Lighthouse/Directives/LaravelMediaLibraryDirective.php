@@ -3,9 +3,8 @@
 namespace ModelariumMediaLibrary\Laravel\Lighthouse\Directives;
 
 use Nuwave\Lighthouse\Schema\Directives\BaseDirective;
-use Nuwave\Lighthouse\Support\Contracts\DefinedDirective;
 
-class LaravelMediaLibraryDirective extends BaseDirective implements DefinedDirective
+class LaravelMediaLibraryDirective extends BaseDirective
 {
     public static function definition(): string
     {
