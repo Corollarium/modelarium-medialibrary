@@ -15,10 +15,10 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.2.0",
-        "webonyx/graphql-php": "^0.13.9",
+        "webonyx/graphql-php": "^14.5",
         "illuminate/support": "^7.16",
-        "corollarium/modelarium": "^0.3",
-        "nuwave/lighthouse": "^5"
+        "corollarium/modelarium": "^0.4",
+        "nuwave/lighthouse": "^5.1"
     },
     "suggest": {
         "spatie/laravel-medialibrary": "The base medialibrary should be installed too."
