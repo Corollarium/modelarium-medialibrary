@@ -8,6 +8,6 @@ class LaravelMediaLibraryDirective extends BaseDirective
 {
     public static function definition(): string
     {
-        return file_get_contents('../../graphql/modelariumMediaLibrary.graphql');
+        return file_get_contents(__DIR__ . '/../../graphql/modelariumMediaLibrary.graphql');
     }
 }
